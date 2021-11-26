@@ -1,7 +1,11 @@
 package main;
 
-import checker.Checkstyle;
+import Entities.Database;
+import Entities.User;
+import Parser.Parser;
+import Solver.Solver;
 import checker.Checker;
+import checker.Checkstyle;
 import common.Constants;
 import fileio.Input;
 import fileio.InputLoader;
@@ -13,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -71,6 +76,13 @@ public final class Main {
         JSONArray arrayResult = new JSONArray();
 
         //TODO add here the entry point to your implementation
+        Parser parser = new Parser();
+        parser.BuildDatabase(input);
+        parser.BuildTasks(input);
+
+        ArrayList<User> users = (ArrayList<User>) Database.getDatabase().getUsers();
+        Solver solver = new Solver(fileWriter, arrayResult);
+        solver.solve(users, parser.getTasks());
 
         fileWriter.closeJSON(arrayResult);
     }
