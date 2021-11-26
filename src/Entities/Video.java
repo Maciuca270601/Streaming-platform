@@ -3,6 +3,7 @@ package Entities;
 import fileio.ShowInput;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Video {
     private String title;
@@ -26,4 +27,13 @@ public class Video {
     public ArrayList<String> getCast() { return cast; }
 
     public ArrayList<String> getGenres() { return genres; }
+
+    public int findActor(String name) {
+        for (String s: cast) {
+            if (Objects.equals(s, name)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

@@ -37,5 +37,7 @@ public class Query {
 
     public int getNumber() { return number; }
 
+    public void setNumber(int number) { this.number = number; }
+
     public List<List<String>> getFilters() { return filters; }
 }

@@ -1,7 +1,6 @@
 package main;
 
-import Entities.Database;
-import Entities.User;
+import Entities.*;
 import Parser.Parser;
 import Solver.Solver;
 import checker.Checker;
@@ -76,13 +75,20 @@ public final class Main {
         JSONArray arrayResult = new JSONArray();
 
         //TODO add here the entry point to your implementation
+        Database database = new Database();
         Parser parser = new Parser();
-        parser.BuildDatabase(input);
+        parser.BuildDatabase(input, database);
         parser.BuildTasks(input);
 
-        ArrayList<User> users = (ArrayList<User>) Database.getDatabase().getUsers();
+
+
+        ArrayList<User> users = (ArrayList<User>) database.getUsers();
         Solver solver = new Solver(fileWriter, arrayResult);
-        solver.solve(users, parser.getTasks());
+        solver.solve(users, parser.getTasks(), database);
+
+        for(Actor a: database.getActors()) {
+            System.out.println(a.getName() + a.actorGrade((ArrayList<Movie>)database.getMovies(), (ArrayList<Serial>)database.getSerials()));
+        }
 
         fileWriter.closeJSON(arrayResult);
     }

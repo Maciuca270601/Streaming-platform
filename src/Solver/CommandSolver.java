@@ -13,7 +13,7 @@ public class CommandSolver {
 
     public CommandSolver() {}
 
-    public void solveCommands(Command c, ArrayList<User> users) {
+    public void solveCommands(Command c, ArrayList<User> users, Database database) {
         this.id = c.getActionId();
         if (Objects.equals(c.getType(), "favorite")) {
             for (User u : users) {
@@ -62,8 +62,8 @@ public class CommandSolver {
             User findUser = new User();
             if (ok == 0) {
                 Movie findMovie = new Movie();
-                findUser = Database.getDatabase().findUser(c.getUsername());
-                findMovie = Database.getDatabase().findMovie(c.getTitle());
+                findUser = database.findUser(c.getUsername());
+                findMovie = database.findMovie(c.getTitle());
 
                 for (Map.Entry<String, Integer> entry : findUser.getHistory().entrySet()) {
                     if (Objects.equals(entry.getKey(), c.getTitle())) {
@@ -79,6 +79,9 @@ public class CommandSolver {
                         }
                     }
                 }
+                if (viewed == 1 && eligible == 0) {
+                    this.message = "error -> " + c.getTitle() + " has been already rated";
+                }
                 if (viewed == 1 && eligible == 1) {
                     findMovie.getRatings().add(c.getGrade());
                     findMovie.getEligibleRaters().add(c.getUsername());
@@ -88,9 +91,9 @@ public class CommandSolver {
             else {
                 Season findSeason = new Season();
                 Serial findSerial = new Serial();
-                findUser = Database.getDatabase().findUser(c.getUsername());
-                findSeason = Database.getDatabase().findSeason(c.getTitle(), c.getSeasonNumber());
-                findSerial = Database.getDatabase().findSerial(c.getTitle());
+                findUser = database.findUser(c.getUsername());
+                findSeason = database.findSeason(c.getTitle(), c.getSeasonNumber());
+                findSerial = database.findSerial(c.getTitle());
 
                 for (Map.Entry<String, Integer> entry : findUser.getHistory().entrySet()) {
                     if (Objects.equals(entry.getKey(), c.getTitle())) {
@@ -108,11 +111,14 @@ public class CommandSolver {
                     }
                 }
 
+                if (viewed == 1 && eligible == 0) {
+                    this.message = "error -> " + c.getTitle() + " has been already rated";
+                }
+
                 if (viewed == 1 && eligible == 1) {
                     findSeason.getRatings().add(c.getGrade());
                     findSeason.getEligibleRaters().add(c.getUsername());
-                    double grade = findSerial.averageGrade();
-                    this.message = "success -> " + c.getTitle() + " was rated with " + grade + " by " + c.getUsername();
+                    this.message = "success -> " + c.getTitle() + " was rated with " + c.getGrade() + " by " + c.getUsername();
                 }
             }
         }

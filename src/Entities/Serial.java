@@ -26,20 +26,21 @@ public class Serial extends Video{
     public ArrayList<Season> getSeasons() { return seasons; }
 
     public Double averageGrade() {
-        double sumGrade = 0d;
-        int numberOfGrades = 0;
+        double seasonGrade;
+        double serialGrade = 0d;
         for (Season s: this.seasons) {
+            seasonGrade = 0d;
             for (Double score: s.getRatings()) {
-                if (score != 0) {
-                    sumGrade = sumGrade + score;
-                    numberOfGrades = numberOfGrades + 1;
-                }
+                seasonGrade = seasonGrade + score;
+            }
+            if (s.getRatings().size() != 0) {
+                serialGrade = serialGrade + (seasonGrade / s.getRatings().size());
             }
         }
-        if (numberOfGrades == 0) {
+        if (serialGrade == 0) {
            return 0d;
         }
-        return sumGrade / numberOfGrades;
+        return serialGrade / numberOfSeasons;
     }
 
 }

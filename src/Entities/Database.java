@@ -1,26 +1,26 @@
 package Entities;
 
+import actor.ActorsAwards;
 import fileio.ActorInputData;
 import fileio.MovieInputData;
 import fileio.SerialInputData;
 import fileio.UserInputData;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Database {
-    protected List<Movie> movies = new ArrayList<>();
-    protected List<Serial> serials = new ArrayList<>();
-    protected List<User> users = new ArrayList<>();
-    protected List<Actor> actors = new ArrayList<>();
-    protected List<Video> videos = new ArrayList<>();
+    private List<Movie> movies;
+    private List<Serial> serials;
+    private List<User> users;
+    private List<Actor> actors;
+    private List<Video> videos;
 
-    private Database() {}
-    private final static Database instance = new Database();
-
-    public static Database getDatabase() {
-            return instance;
+    public Database() {
+        this.movies = new ArrayList<>();
+        this.serials = new ArrayList<>();
+        this.users = new ArrayList<>();
+        this.actors = new ArrayList<>();
+        this.videos = new ArrayList<>();
     }
 
     public void addMovies(List<MovieInputData> moviesInput) {
@@ -94,6 +94,56 @@ public class Database {
             }
         }
         return null;
+    }
+
+    public ArrayList<Actor> filterActorByWords(ArrayList<Actor> toFilter, List<String> filters) {
+        if (filters == null) {
+           return toFilter;
+        }
+        ArrayList<Actor> filteredActors = new ArrayList<>();
+        for (Actor a: toFilter) {
+            for (String s: filters) {
+                if (Objects.equals(s, a.getCarrerDescription())) {
+                    filteredActors.add(a);
+                }
+            }
+        }
+        return filteredActors;
+    }
+
+    public ArrayList<Actor> filterActorByAwards(ArrayList<Actor> toFilter, List<String> filters) {
+        if (filters == null) {
+            return toFilter;
+        }
+        ArrayList<Actor> filteredActors = new ArrayList<>();
+        for (Actor a: toFilter) {
+            for (String s: filters) {
+                if (Objects.equals(s, a.getAwards().toString())) {
+                    filteredActors.add(a);
+                }
+            }
+        }
+        return filteredActors;
+    }
+
+
+
+    public ArrayList<Actor> sortActorsByGrade (List<List<String>> filters) {
+        ArrayList<Actor> filteredActors = filterActorByWords((ArrayList<Actor>)this.actors, filters.get(2));
+        filteredActors = filterActorByAwards(filteredActors, filters.get(3));
+
+        filteredActors.removeIf(a -> a.actorGrade((ArrayList<Movie>) movies, (ArrayList<Serial>) serials) == 0);
+
+        filteredActors.sort(new Comparator<Actor>() {
+
+            @Override
+            public int compare(Actor o1, Actor o2) {
+                int gradeCompare = o1.actorGrade((ArrayList<Movie>)movies, (ArrayList<Serial>)serials).compareTo(o2.actorGrade((ArrayList<Movie>)movies, (ArrayList<Serial>)serials));
+                int nameCompare = o1.getName().compareTo(o2.getName());
+                return (gradeCompare == 0) ? nameCompare : gradeCompare;
+            }
+        });
+        return filteredActors;
     }
 
 

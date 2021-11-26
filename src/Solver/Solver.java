@@ -1,11 +1,13 @@
 package Solver;
 
+import Entities.Database;
 import Entities.User;
 import Tasks.Tasks;
 import fileio.Writer;
 import Tasks.Command;
 import Tasks.Query;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,13 +25,15 @@ public class Solver {
         this.arrayResult = arrayResult;
     }
 
-    public void solve(ArrayList<User> users, Tasks tasks) throws IOException {
+    public void solve(ArrayList<User> users, Tasks tasks, Database database) throws IOException {
         /*
          * Solve Commands
          */
+        //System.out.println("Numarul de actori din basa de date este: " + Database.getDatabase().getActors().size());
+
         CommandSolver cmdSolve = new CommandSolver();
         for (Command c: tasks.getCommands()) {
-            cmdSolve.solveCommands(c, users);
+            cmdSolve.solveCommands(c, users, database);
             id = cmdSolve.getId();
             message = cmdSolve.getMessage();
             makeOutput();
@@ -39,10 +43,10 @@ public class Solver {
          */
         QuerySolver qSolve = new QuerySolver();
         for (Query q: tasks.getQueries()) {
-            qSolve.solveQueries(q, users);
-            // id = qSolve.getId();
-            // message = qSolve.getMessage();
-            // makeOutput();
+            qSolve.solveQueries(q, users, database);
+            id = qSolve.getId();
+            message = qSolve.getMessage();
+            makeOutput();
         }
 
         /*

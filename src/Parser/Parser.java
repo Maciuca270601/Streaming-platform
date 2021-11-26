@@ -9,12 +9,12 @@ public class Parser {
 
     public Parser() {}
 
-    public void BuildDatabase(Input input) {
-        Database.getDatabase().addUsers(input.getUsers());
-        Database.getDatabase().addActors(input.getActors());
-        Database.getDatabase().addMovies(input.getMovies());
-        Database.getDatabase().addSerials(input.getSerials());
-        Database.getDatabase().addVideos();
+    public void BuildDatabase(Input input, Database database) {
+        database.addUsers(input.getUsers());
+        database.addActors(input.getActors());
+        database.addMovies(input.getMovies());
+        database.addSerials(input.getSerials());
+        database.addVideos();
     }
 
     public void BuildTasks(Input input) {
