@@ -6,6 +6,7 @@ import Tasks.Tasks;
 import fileio.Writer;
 import Tasks.Command;
 import Tasks.Query;
+import Tasks.Recommandation;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
@@ -48,10 +49,16 @@ public class Solver {
             message = qSolve.getMessage();
             makeOutput();
         }
-
         /*
          * Solve Recommandation
          */
+        RecommandationSolver rSolve = new RecommandationSolver();
+        for (Recommandation r: tasks.getRecommandations()) {
+            rSolve.solveRecommandations(r, users, database);
+            id = rSolve.getId();
+            message = rSolve.getMessage();
+            makeOutput();
+        }
 
     }
 

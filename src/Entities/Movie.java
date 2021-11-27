@@ -28,7 +28,7 @@ public class Movie extends Video{
 
     public ArrayList<Double> getRatings() { return ratings; }
 
-    public Double ratingMovie() {
+    public Double ratingVideo() {
         double sumGrade = 0d;
         for (Double rating : this.ratings) {
             sumGrade = sumGrade + rating;

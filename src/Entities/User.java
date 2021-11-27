@@ -58,4 +58,15 @@ public class User {
         }
         return counter;
     }
+
+    public Integer isVideo(String videoName) {
+        int viewed = 0; // presupunem ca nu l-am vazut
+        for (Map.Entry<String, Integer> entry : this.history.entrySet()) {
+            if (Objects.equals(entry.getKey(), videoName)) {
+                viewed = 1;
+                break;
+            }
+        }
+        return viewed;
+    }
 }

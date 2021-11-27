@@ -27,7 +27,7 @@ public class Serial extends Video{
 
     public ArrayList<Season> getSeasons() { return seasons; }
 
-    public Double ratingSerial() {
+    public Double ratingVideo() {
         double seasonGrade;
         double serialGrade = 0d;
         for (Season s: this.seasons) {

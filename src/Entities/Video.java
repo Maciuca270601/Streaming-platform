@@ -49,4 +49,17 @@ public class Video {
         }
         return counter;
     }
+
+    public Double ratingVideo() {
+        return 0d;
+    }
+
+    public Integer positionVideo(ArrayList<Video> videos) {
+        for (int i = 0; i < videos.size(); i++) {
+            if (Objects.equals(videos.get(i).getTitle(), this.title)) {
+                return i;
+            }
+        }
+        return 0;
+    }
 }

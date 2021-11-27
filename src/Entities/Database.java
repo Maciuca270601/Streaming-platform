@@ -277,12 +277,12 @@ public class Database {
         ArrayList<Movie> filteredMovies = filterMoviesByYear((ArrayList<Movie>)this.movies, filters.get(0));
         filteredMovies = filterMoviesByGenre(filteredMovies, filters.get(1));
 
-        filteredMovies.removeIf(m -> m.ratingMovie() == 0);
+        filteredMovies.removeIf(m -> m.ratingVideo() == 0);
 
         filteredMovies.sort(new Comparator<Movie>() {
             @Override
             public int compare(Movie o1, Movie o2) {
-                int ratingCompare = o1.ratingMovie().compareTo(o2.ratingMovie());
+                int ratingCompare = o1.ratingVideo().compareTo(o2.ratingVideo());
                 int nameCompare = o1.getTitle().compareTo(o2.getTitle());
                 return (ratingCompare == 0) ? nameCompare : ratingCompare;
             }
@@ -294,12 +294,12 @@ public class Database {
         ArrayList<Serial> filteredSerials = filterSerialsByYear((ArrayList<Serial>)this.serials, filters.get(0));
         filteredSerials = filterSerialsByGenre(filteredSerials, filters.get(1));
 
-        filteredSerials.removeIf(s -> s.ratingSerial() == 0);
+        filteredSerials.removeIf(s -> s.ratingVideo() == 0);
 
         filteredSerials.sort(new Comparator<Serial>() {
             @Override
             public int compare(Serial o1, Serial o2) {
-                int ratingCompare = o1.ratingSerial().compareTo(o2.ratingSerial());
+                int ratingCompare = o1.ratingVideo().compareTo(o2.ratingVideo());
                 int nameCompare = o1.getTitle().compareTo(o2.getTitle());
                 return (ratingCompare == 0) ? nameCompare : ratingCompare;
             }
@@ -405,6 +405,63 @@ public class Database {
         return filteredSerials;
     }
 
+    public ArrayList<Video> sortVideosByViews(String username) {
+        ArrayList<Video> filteredVideos = new ArrayList<>();
+        User u = new User();
+        u = findUser(username);
+        for (Video v: this.videos) {
+            int ok = 0; // unseen
+            for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
+                if (Objects.equals(entry.getKey(), v.getTitle())) {
+                    ok = 1;// seen
+                }
+            }
+            if (ok == 0) {
+                filteredVideos.add(v);
+            }
+        }
+
+        filteredVideos.sort(new Comparator<Video>() {
+            @Override
+            public int compare(Video o1, Video o2) {
+                int ratingCompare = o2.ratingVideo().compareTo(o1.ratingVideo());
+                int secondCompare = o1.positionVideo((ArrayList<Video>)videos).compareTo(o2.positionVideo((ArrayList<Video>)videos));
+                return (ratingCompare == 0) ? secondCompare : ratingCompare;
+            }
+        });
+        return filteredVideos;
+    }
+
+    public ArrayList<Video> sortVideosBySearch(String username, String genre) {
+        ArrayList<Video> filteredVideos = new ArrayList<>();
+        User u = new User();
+        u = findUser(username);
+        for (Video v: this.videos) {
+            int ok = 0; // unseen
+            for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
+                if (Objects.equals(entry.getKey(), v.getTitle())) {
+                    ok = 1;// seen
+                }
+            }
+            if (ok == 0) {
+                for (String s: v.getGenres()) {
+                    if (Objects.equals(genre,s)) {
+                        filteredVideos.add(v);
+                    }
+                }
+            }
+        }
+
+        filteredVideos.sort(new Comparator<Video>() {
+            @Override
+            public int compare(Video o1, Video o2) {
+                int ratingCompare = o1.ratingVideo().compareTo(o2.ratingVideo());
+                int nameCompare = o1.getTitle().compareTo(o2.getTitle());
+                return (ratingCompare == 0) ? nameCompare : ratingCompare;
+            }
+        });
+        return filteredVideos;
+    }
 
 
 
