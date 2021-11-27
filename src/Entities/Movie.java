@@ -3,6 +3,7 @@ package Entities;
 import fileio.MovieInputData;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class Movie extends Video{
@@ -40,5 +41,17 @@ public class Movie extends Video{
 
     public Integer durationMovie() {
         return this.duration;
+    }
+
+    public Integer viewsMovie(ArrayList<User> users) {
+        int counter = 0;
+        for (User u : users) {
+            for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
+                if (Objects.equals(entry.getKey(), this.getTitle())) {
+                    counter = counter + entry.getValue();
+                }
+            }
+        }
+        return counter;
     }
 }

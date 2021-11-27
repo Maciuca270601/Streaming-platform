@@ -3,6 +3,7 @@ package Entities;
 import fileio.SerialInputData;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class Serial extends Video{
@@ -50,5 +51,17 @@ public class Serial extends Video{
             duration = duration + s.getDuration();
         }
         return duration;
+    }
+
+    public Integer viewsSerial(ArrayList<User> users) {
+        int counter = 0;
+        for (User u : users) {
+            for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
+                if (Objects.equals(entry.getKey(), this.getTitle())) {
+                    counter = counter + entry.getValue();
+                }
+            }
+        }
+        return counter;
     }
 }

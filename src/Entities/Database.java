@@ -371,6 +371,41 @@ public class Database {
         return filteredSerials;
     }
 
+    public ArrayList<Movie> sortMoviesByViews(List<List<String>> filters) {
+        ArrayList<Movie> filteredMovies = filterMoviesByYear((ArrayList<Movie>)this.movies, filters.get(0));
+        filteredMovies = filterMoviesByGenre(filteredMovies, filters.get(1));
+
+        filteredMovies.removeIf(m -> m.viewsMovie((ArrayList<User>)this.users) == 0);
+
+        filteredMovies.sort(new Comparator<Movie>() {
+            @Override
+            public int compare(Movie o1, Movie o2) {
+                int viewCompare = o1.viewsMovie((ArrayList<User>)users).compareTo(o2.viewsMovie((ArrayList<User>)users));
+                int nameCompare = o1.getTitle().compareTo(o2.getTitle());
+                return (viewCompare == 0) ? nameCompare : viewCompare;
+            }
+        });
+        return filteredMovies;
+    }
+
+    public ArrayList<Serial> sortSerialsByViews(List<List<String>> filters) {
+        ArrayList<Serial> filteredSerials = filterSerialsByYear((ArrayList<Serial>)this.serials, filters.get(0));
+        filteredSerials = filterSerialsByGenre(filteredSerials, filters.get(1));
+
+        filteredSerials.removeIf(s -> s.viewsSerial((ArrayList<User>)this.users) == 0);
+
+        filteredSerials.sort(new Comparator<Serial>() {
+            @Override
+            public int compare(Serial o1, Serial o2) {
+                int viewCompare = o1.viewsSerial((ArrayList<User>)users).compareTo(o2.viewsSerial((ArrayList<User>)users));
+                int nameCompare = o1.getTitle().compareTo(o2.getTitle());
+                return (viewCompare == 0) ? nameCompare : viewCompare;
+            }
+        });
+        return filteredSerials;
+    }
+
+
 
 
 

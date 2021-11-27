@@ -255,6 +255,53 @@ public class QuerySolver {
             message.append("]");
         }
 
+        if (Objects.equals(q.getCriteria(), "most_viewed")) {
+            message.append("Query result: [");
+            if (Objects.equals(q.getObjectType(), "movies")) {
+                ArrayList<Movie> sortedMovies = database.sortMoviesByViews(q.getFilters());
+
+                if (sortedMovies.size() < q.getNumber()) {
+                    q.setNumber(sortedMovies.size());
+                }
+                if (Objects.equals(q.getSortType(), "asc") && sortedMovies.size() != 0) {
+                    for (int i = 0; i < q.getNumber() - 1; i++) {
+                        message.append(sortedMovies.get(i).getTitle());
+                        message.append(", ");
+                    }
+                    message.append(sortedMovies.get(q.getNumber() - 1).getTitle());
+                }
+                else if (Objects.equals(q.getSortType(), "desc") && sortedMovies.size() != 0) {
+                    for (int i = q.getNumber() - 1; i > 0; i--) {
+                        message.append(sortedMovies.get(i).getTitle());
+                        message.append(", ");
+                    }
+                    message.append(sortedMovies.get(0).getTitle());
+                }
+            }
+            if (Objects.equals(q.getObjectType(), "shows")) {
+                ArrayList<Serial> sortedSerials = database.sortSerialsByViews(q.getFilters());
+
+                if (sortedSerials.size() < q.getNumber()) {
+                    q.setNumber(sortedSerials.size());
+                }
+                if (Objects.equals(q.getSortType(), "asc") && sortedSerials.size() != 0) {
+                    for (int i = 0; i < q.getNumber() - 1; i++) {
+                        message.append(sortedSerials.get(i).getTitle());
+                        message.append(", ");
+                    }
+                    message.append(sortedSerials.get(q.getNumber() - 1).getTitle());
+                }
+                else if (Objects.equals(q.getSortType(), "desc") && sortedSerials.size() != 0) {
+                    for (int i = q.getNumber() - 1; i > 0; i--) {
+                        message.append(sortedSerials.get(i).getTitle());
+                        message.append(", ");
+                    }
+                    message.append(sortedSerials.get(0).getTitle());
+                }
+            }
+            message.append("]");
+        }
+
     }
 
     public String getMessage() {
