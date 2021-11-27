@@ -4,7 +4,9 @@ import actor.ActorsAwards;
 import fileio.ActorInputData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Actor {
     private String name;
@@ -73,5 +75,17 @@ public class Actor {
             return 0d;
         }
         return sumGrade / count;
+    }
+
+    public Integer actorAwards(List<String> filters) {
+        int counter = 0;
+        for (String s: filters) {
+            for (Map.Entry<ActorsAwards, Integer> entry : this.getAwards().entrySet()) {
+                if (Objects.equals(entry.getKey().toString(), s)) {
+                    counter = counter + entry.getValue();
+                }
+            }
+        }
+        return counter;
     }
 }

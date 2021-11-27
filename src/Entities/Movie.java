@@ -3,6 +3,7 @@ package Entities;
 import fileio.MovieInputData;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Movie extends Video{
     private int duration;
@@ -26,7 +27,7 @@ public class Movie extends Video{
 
     public ArrayList<Double> getRatings() { return ratings; }
 
-    public Double averageGrade() {
+    public Double ratingMovie() {
         double sumGrade = 0d;
         for (Double rating : this.ratings) {
             sumGrade = sumGrade + rating;
@@ -35,5 +36,9 @@ public class Movie extends Video{
             return 0d;
         }
         return sumGrade / this.ratings.size();
+    }
+
+    public Integer durationMovie() {
+        return this.duration;
     }
 }

@@ -3,6 +3,7 @@ package Entities;
 import fileio.SerialInputData;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Serial extends Video{
     private int numberOfSeasons;
@@ -25,7 +26,7 @@ public class Serial extends Video{
 
     public ArrayList<Season> getSeasons() { return seasons; }
 
-    public Double averageGrade() {
+    public Double ratingSerial() {
         double seasonGrade;
         double serialGrade = 0d;
         for (Season s: this.seasons) {
@@ -43,4 +44,11 @@ public class Serial extends Video{
         return serialGrade / numberOfSeasons;
     }
 
+    public Integer durationSerial() {
+        int duration = 0;
+        for (Season s: this.getSeasons()) {
+            duration = duration + s.getDuration();
+        }
+        return duration;
+    }
 }

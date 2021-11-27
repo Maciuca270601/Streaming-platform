@@ -36,4 +36,17 @@ public class Video {
         }
         return 0;
     }
+
+    public Integer favoriteVideo(ArrayList<User> users) {
+        int counter = 0;
+        for (User u: users) {
+            for (String favorite: u.getFavoriteMovies()) {
+                if (Objects.equals(favorite, this.getTitle())) {
+                    counter = counter + 1;
+                    break;
+                }
+            }
+        }
+        return counter;
+    }
 }

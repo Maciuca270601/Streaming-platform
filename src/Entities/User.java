@@ -5,6 +5,7 @@ import fileio.UserInputData;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 public class User {
     private String username;
@@ -34,4 +35,27 @@ public class User {
     public void setHistory(Map<String, Integer> history) { this.history = history; }
 
     public ArrayList<String> getFavoriteMovies() { return favoriteMovies; }
+
+    public Integer countRatings(ArrayList<Movie>movies, ArrayList<Serial>serials) {
+        int counter = 0;
+        for (Movie m: movies) {
+            for (String s: m.getEligibleRaters()) {
+                if (Objects.equals(this.username, s)) {
+                    counter = counter + 1;
+                    break;
+                }
+            }
+        }
+        for (Serial serial: serials) {
+            for (Season season: serial.getSeasons()) {
+                for (String s: season.getEligibleRaters()) {
+                    if (Objects.equals(this.username, s)) {
+                        counter = counter + 1;
+                        break;
+                    }
+                }
+            }
+        }
+        return counter;
+    }
 }

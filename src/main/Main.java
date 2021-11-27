@@ -86,10 +86,6 @@ public final class Main {
         Solver solver = new Solver(fileWriter, arrayResult);
         solver.solve(users, parser.getTasks(), database);
 
-        for(Actor a: database.getActors()) {
-            System.out.println(a.getName() + a.actorGrade((ArrayList<Movie>)database.getMovies(), (ArrayList<Serial>)database.getSerials()));
-        }
-
         fileWriter.closeJSON(arrayResult);
     }
 }

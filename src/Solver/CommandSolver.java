@@ -79,6 +79,9 @@ public class CommandSolver {
                         }
                     }
                 }
+                if (viewed == 0) {
+                    this.message = "error -> " + c.getTitle() + " is not seen";
+                }
                 if (viewed == 1 && eligible == 0) {
                     this.message = "error -> " + c.getTitle() + " has been already rated";
                 }
@@ -110,7 +113,9 @@ public class CommandSolver {
                         }
                     }
                 }
-
+                if (viewed == 0) {
+                    this.message = "error -> " + c.getTitle() + " is not seen";
+                }
                 if (viewed == 1 && eligible == 0) {
                     this.message = "error -> " + c.getTitle() + " has been already rated";
                 }
