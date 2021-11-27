@@ -98,7 +98,7 @@ public class Database {
 
     public ArrayList<Actor> filterActorByWords(ArrayList<Actor> toFilter, List<String> filters) {
         ArrayList<Actor> filteredActors = new ArrayList<>();
-        if (filters == null) {
+        if (filters == null || filters.get(0) == null) {
             filteredActors.addAll(toFilter);
             return filteredActors;
         }
@@ -122,7 +122,7 @@ public class Database {
 
     public ArrayList<Actor> filterActorByAwards(ArrayList<Actor> toFilter, List<String> filters) {
         ArrayList<Actor> filteredActors = new ArrayList<>();
-        if (filters == null) {
+        if (filters == null || filters.get(0) == null) {
             filteredActors.addAll(toFilter);
             return filteredActors;
 
@@ -145,10 +145,11 @@ public class Database {
 
     public ArrayList<Movie> filterMoviesByYear(ArrayList<Movie> toFilter, List<String> filters) {
         ArrayList<Movie> filteredMovies = new ArrayList<>();
-        if (filters == null) {
+        if (filters == null || filters.get(0) == null) {
             filteredMovies.addAll(toFilter);
             return filteredMovies;
         }
+
         for (Movie m: toFilter) {
             for (String s : filters) {
                 if (Objects.equals(s, String.valueOf(m.getYear()))) {
@@ -161,7 +162,7 @@ public class Database {
 
     public ArrayList<Movie> filterMoviesByGenre(ArrayList<Movie> toFilter, List<String> filters) {
         ArrayList<Movie> filteredMovies = new ArrayList<>();
-        if (filters == null) {
+        if (filters == null || filters.get(0) == null) {
             filteredMovies.addAll(toFilter);
             return filteredMovies;
         }
@@ -179,7 +180,7 @@ public class Database {
 
     public ArrayList<Serial> filterSerialsByYear(ArrayList<Serial> toFilter, List<String> filters) {
         ArrayList<Serial> filteredSerials = new ArrayList<>();
-        if (filters == null) {
+        if (filters == null || filters.get(0) == null) {
             filteredSerials.addAll(toFilter);
             return filteredSerials;
         }
@@ -195,7 +196,7 @@ public class Database {
 
     public ArrayList<Serial> filterSerialsByGenre(ArrayList<Serial> toFilter, List<String> filters) {
         ArrayList<Serial> filteredSerials = new ArrayList<>();
-        if (filters == null) {
+        if (filters == null || filters.get(0) == null) {
             filteredSerials.addAll(toFilter);
             return filteredSerials;
         }
@@ -413,7 +414,8 @@ public class Database {
             int ok = 0; // unseen
             for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
                 if (Objects.equals(entry.getKey(), v.getTitle())) {
-                    ok = 1;// seen
+                    ok = 1; // seen
+                    break;
                 }
             }
             if (ok == 0) {

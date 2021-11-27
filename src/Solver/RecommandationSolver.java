@@ -16,13 +16,13 @@ public class RecommandationSolver {
 
     public void solveRecommandations(Recommandation r, ArrayList<User> users, Database database) {
         this.id = r.getActionId();
+        this.message = new StringBuilder();
         /*
          * todo recommandations
          *  doamne coaie cat am putut sa muncesc la tema asta nici mie nu imi vine inca sa cred
          */
         if (Objects.equals(r.getType(), "standard")) {
-            message.append(r.getType().substring(0, 1).toUpperCase()).append(r.getType().substring(1));
-            message.append(r.getActionType().substring(0, 1).toUpperCase()).append(r.getActionType().substring(1));
+            message.append("StandardRecommendation");
             int ok = 0;
             for (User u : users) {
                 if (Objects.equals(r.getUsername(), u.getUsername())) {
@@ -37,7 +37,8 @@ public class RecommandationSolver {
                 }
             }
             if (ok == 0) {
-                message.append(" cannot be applied!");
+                message.setLength(0);
+                message.append("StandardRecommendation cannot be applied!");
             }
         }
 
@@ -53,7 +54,7 @@ public class RecommandationSolver {
             message.append("SearchRecommendation ");
             ArrayList<Video> sortedVideos = database.sortVideosBySearch(r.getUsername(), r.getGenre());
             if (sortedVideos.size() != 0) {
-                message.append(" result: ");
+                message.append("result: [");
                 for (int i = 0; i < sortedVideos.size() - 1; i++) {
                     message.append(sortedVideos.get(i).getTitle());
                     message.append(", ");

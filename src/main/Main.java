@@ -11,6 +11,7 @@ import fileio.InputLoader;
 import fileio.Writer;
 import org.json.simple.JSONArray;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+
+
 
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
@@ -79,8 +82,6 @@ public final class Main {
         Parser parser = new Parser();
         parser.BuildDatabase(input, database);
         parser.BuildTasks(input);
-
-
 
         ArrayList<User> users = (ArrayList<User>) database.getUsers();
         Solver solver = new Solver(fileWriter, arrayResult);
