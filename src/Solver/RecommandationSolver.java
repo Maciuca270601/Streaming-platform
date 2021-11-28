@@ -82,13 +82,20 @@ public class RecommandationSolver {
             message.append("FavoriteRecommendation ");
             User user = database.findUser(r.getUsername());
             ArrayList<Video> sortedVideos = database.bestFavorite(user);
+
             int ok = 0;
             if (Objects.equals(user.getSubscriptionType(), "PREMIUM")) {
                 ok = 1;
             }
+//
             if (sortedVideos.size() != 0 && ok == 1) {
                 message.append("result: ");
-                message.append(sortedVideos.get(0).getTitle());
+                for (Video v: sortedVideos) {
+                    if(Objects.equals(v.favoriteVideo(users), sortedVideos.get(sortedVideos.size() - 1).favoriteVideo(users))) {
+                        message.append(v.getTitle());
+                        break;
+                    }
+                }
             }
             else {
                 message.setLength(0);
@@ -104,6 +111,7 @@ public class RecommandationSolver {
             if (Objects.equals(user.getSubscriptionType(), "PREMIUM")) {
                 ok = 1;
             }
+
             if (popularVideo != null && ok == 1) {
                 message.append("result: ");
                 message.append(popularVideo.getTitle());

@@ -493,7 +493,7 @@ public class Database {
             int counter = 0;
             for (Video v: this.videos) {
                 for (String videoGenre: v.getGenres()) {
-                    if (Objects.equals(videoGenre, genre.toString())) {
+                    if (Objects.equals(videoGenre.toLowerCase(), genre.toString().toLowerCase())) {
                         counter = counter + v.viewsVideo((ArrayList<User>)users);
                     }
                 }
@@ -512,6 +512,7 @@ public class Database {
         });
 
         for (Map.Entry<String, Integer> entry: list) {
+            System.out.println("genre is: " + entry.getKey() + "value of views" + entry.getValue());
             sortedGenres.add(entry.getKey());
         }
         return sortedGenres;
@@ -520,6 +521,9 @@ public class Database {
     public Video bestPopular(User u) {
         ArrayList<String> sortedGenres = sortedGenres();
 
+        for (Video v: this.videos) {
+            System.out.println(v.getTitle() + " genre is: " + v.getGenres().toString() + " ----->" + u.isVideo(v.getTitle()));
+        }
         for (String genre: sortedGenres) {
             for (Video v: this.videos) {
                 for (String videoGenre: v.getGenres()) {
