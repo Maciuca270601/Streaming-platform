@@ -79,12 +79,8 @@ public class Actor {
 
     public Integer actorAwards(List<String> filters) {
         int counter = 0;
-        for (String s: filters) {
-            for (Map.Entry<ActorsAwards, Integer> entry : this.getAwards().entrySet()) {
-                if (Objects.equals(entry.getKey().toString(), s)) {
-                    counter = counter + entry.getValue();
-                }
-            }
+        for (Map.Entry<ActorsAwards, Integer> entry : this.getAwards().entrySet()) {
+            counter = counter + entry.getValue();
         }
         return counter;
     }

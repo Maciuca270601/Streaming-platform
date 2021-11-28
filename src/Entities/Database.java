@@ -107,7 +107,7 @@ public class Database {
             String[] phrase = a.getCarrerDescription().split("\\W+");
             for (String s: filters) {
                 for (String s2: phrase) {
-                    if (Objects.equals(s2, s)) {
+                    if (Objects.equals(s2.toLowerCase(), s.toLowerCase())) {
                        counter = counter + 1;
                        break;
                     }
@@ -460,6 +460,25 @@ public class Database {
                 int ratingCompare = o1.ratingVideo().compareTo(o2.ratingVideo());
                 int nameCompare = o1.getTitle().compareTo(o2.getTitle());
                 return (ratingCompare == 0) ? nameCompare : ratingCompare;
+            }
+        });
+        return filteredVideos;
+    }
+
+    public ArrayList<Video> bestFavorite(User u) {
+        ArrayList<Video> filteredVideos = new ArrayList<>();
+        for (Video v: this.videos) {
+            if (u.isVideo(v.getTitle()) == 0 && v.favoriteVideo((ArrayList<User>)users) != 0) {
+               filteredVideos.add(v);
+            }
+        }
+
+        filteredVideos.sort(new Comparator<Video>() {
+            @Override
+            public int compare(Video o1, Video o2) {
+                int favoriteCompare = o1.favoriteVideo((ArrayList<User>)users).compareTo(o2.favoriteVideo((ArrayList<User>)users));
+                int positionCompare = o1.positionVideo((ArrayList<Video>)videos).compareTo(o2.positionVideo((ArrayList<Video>)videos));
+                return (favoriteCompare == 0) ? positionCompare : favoriteCompare;
             }
         });
         return filteredVideos;
