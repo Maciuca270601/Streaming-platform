@@ -3,6 +3,7 @@ package Entities;
 import fileio.ShowInput;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class Video {
@@ -61,5 +62,17 @@ public class Video {
             }
         }
         return 0;
+    }
+
+    public Integer viewsVideo(ArrayList<User> users) {
+        int counter = 0;
+        for (User u : users) {
+            for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
+                if (Objects.equals(entry.getKey(), this.getTitle())) {
+                    counter = counter + entry.getValue();
+                }
+            }
+        }
+        return counter;
     }
 }

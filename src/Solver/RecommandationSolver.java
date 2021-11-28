@@ -92,9 +92,27 @@ public class RecommandationSolver {
             }
             else {
                 message.setLength(0);
-                message.append("SearchRecommendation cannot be applied!");
+                message.append("FavoriteRecommendation cannot be applied!");
             }
         }
+
+        if (Objects.equals(r.getType(), "popular")) {
+            message.append("PopularRecommendation ");
+            User user = database.findUser(r.getUsername());
+            Video popularVideo = database.bestPopular(user);
+            int ok = 0;
+            if (Objects.equals(user.getSubscriptionType(), "PREMIUM")) {
+                ok = 1;
+            }
+            if (popularVideo != null && ok == 1) {
+                message.append("result: ");
+                message.append(popularVideo.getTitle());
+            }
+            else {
+                message.setLength(0);
+                message.append("PopularRecommendation cannot be applied!");
+            }
+    }
 
 
     }

@@ -53,15 +53,4 @@ public class Serial extends Video{
         return duration;
     }
 
-    public Integer viewsSerial(ArrayList<User> users) {
-        int counter = 0;
-        for (User u : users) {
-            for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {
-                if (Objects.equals(entry.getKey(), this.getTitle())) {
-                    counter = counter + entry.getValue();
-                }
-            }
-        }
-        return counter;
-    }
 }

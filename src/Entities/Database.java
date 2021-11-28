@@ -1,6 +1,7 @@
 package Entities;
 
 import actor.ActorsAwards;
+import entertainment.Genre;
 import fileio.ActorInputData;
 import fileio.MovieInputData;
 import fileio.SerialInputData;
@@ -169,7 +170,7 @@ public class Database {
         for (Movie m: toFilter) {
             for (String s: filters) {
                 for (String genre: m.getGenres()) {
-                    if (Objects.equals(genre, s)) {
+                    if (Objects.equals(genre.toLowerCase(), s.toLowerCase())) {
                         filteredMovies.add(m);
                     }
                 }
@@ -203,7 +204,7 @@ public class Database {
         for (Serial s: toFilter) {
             for (String filter: filters) {
                 for (String genre: s.getGenres()) {
-                    if (Objects.equals(genre, filter)) {
+                    if (Objects.equals(genre.toLowerCase(), filter.toLowerCase())) {
                         filteredSerials.add(s);
                     }
                 }
@@ -376,12 +377,12 @@ public class Database {
         ArrayList<Movie> filteredMovies = filterMoviesByYear((ArrayList<Movie>)this.movies, filters.get(0));
         filteredMovies = filterMoviesByGenre(filteredMovies, filters.get(1));
 
-        filteredMovies.removeIf(m -> m.viewsMovie((ArrayList<User>)this.users) == 0);
+        filteredMovies.removeIf(m -> m.viewsVideo((ArrayList<User>)this.users) == 0);
 
         filteredMovies.sort(new Comparator<Movie>() {
             @Override
             public int compare(Movie o1, Movie o2) {
-                int viewCompare = o1.viewsMovie((ArrayList<User>)users).compareTo(o2.viewsMovie((ArrayList<User>)users));
+                int viewCompare = o1.viewsVideo((ArrayList<User>)users).compareTo(o2.viewsVideo((ArrayList<User>)users));
                 int nameCompare = o1.getTitle().compareTo(o2.getTitle());
                 return (viewCompare == 0) ? nameCompare : viewCompare;
             }
@@ -393,12 +394,12 @@ public class Database {
         ArrayList<Serial> filteredSerials = filterSerialsByYear((ArrayList<Serial>)this.serials, filters.get(0));
         filteredSerials = filterSerialsByGenre(filteredSerials, filters.get(1));
 
-        filteredSerials.removeIf(s -> s.viewsSerial((ArrayList<User>)this.users) == 0);
+        filteredSerials.removeIf(s -> s.viewsVideo((ArrayList<User>)this.users) == 0);
 
         filteredSerials.sort(new Comparator<Serial>() {
             @Override
             public int compare(Serial o1, Serial o2) {
-                int viewCompare = o1.viewsSerial((ArrayList<User>)users).compareTo(o2.viewsSerial((ArrayList<User>)users));
+                int viewCompare = o1.viewsVideo((ArrayList<User>)users).compareTo(o2.viewsVideo((ArrayList<User>)users));
                 int nameCompare = o1.getTitle().compareTo(o2.getTitle());
                 return (viewCompare == 0) ? nameCompare : viewCompare;
             }
@@ -482,6 +483,53 @@ public class Database {
             }
         });
         return filteredVideos;
+    }
+
+    public ArrayList<String> sortedGenres() {
+        HashMap<String, Integer> allGenres = new HashMap<>();
+        ArrayList<String> sortedGenres = new ArrayList<>();
+
+        for (Genre genre: Genre.values()) {
+            int counter = 0;
+            for (Video v: this.videos) {
+                for (String videoGenre: v.getGenres()) {
+                    if (Objects.equals(videoGenre, genre.toString())) {
+                        counter = counter + v.viewsVideo((ArrayList<User>)users);
+                    }
+                }
+            }
+            allGenres.put(genre.toString(), counter);
+        }
+        // Create a list from elements of HashMap
+        ArrayList<Map.Entry<String, Integer>> list = new ArrayList<>(allGenres.entrySet());
+
+        // Sort the list
+        list.sort(new Comparator<>() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        for (Map.Entry<String, Integer> entry: list) {
+            sortedGenres.add(entry.getKey());
+        }
+        return sortedGenres;
+    }
+
+    public Video bestPopular(User u) {
+        ArrayList<String> sortedGenres = sortedGenres();
+
+        for (String genre: sortedGenres) {
+            for (Video v: this.videos) {
+                for (String videoGenre: v.getGenres()) {
+                    if (Objects.equals(videoGenre.toLowerCase(), genre.toLowerCase()) && u.isVideo(v.getTitle()) == 0) {
+                        return v;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 
