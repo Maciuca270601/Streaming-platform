@@ -1,10 +1,10 @@
-package Tasks;
+package tasks;
 
 import fileio.ActionInputData;
 
 import java.util.List;
 
-public class Command {
+public final class Command {
     private int actionId;
     private String actionType;
     private String type;
@@ -19,9 +19,11 @@ public class Command {
     private int seasonNumber;
     private List<List<String>> filters;
 
-    public Command() {}
+    public Command() {
 
-    public Command(ActionInputData action) {
+    }
+
+    public Command(final ActionInputData action) {
         this.actionId = action.getActionId();
         this.actionType = action.getActionType();
         this.type = action.getType();
@@ -37,30 +39,55 @@ public class Command {
         this.filters = action.getFilters();
     }
 
-    public int getActionId() { return actionId; }
+    public int getActionId() {
+        return actionId;
+    }
 
-    public String getActionType() { return actionType; }
+    public String getActionType() {
+        return actionType;
+    }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getGenre() { return genre; }
+    public String getGenre() {
+        return genre;
+    }
 
-    public String getObjectType() { return objectType; }
+    public String getObjectType() {
+        return objectType;
+    }
 
-    public String getSortType() { return sortType; }
+    public String getSortType() {
+        return sortType;
+    }
 
-    public String getCriteria() { return criteria; }
+    public String getCriteria() {
+        return criteria;
+    }
 
-    public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public int getNumber() { return number; }
+    public int getNumber() {
+        return number;
+    }
 
-    public double getGrade() { return grade; }
+    public double getGrade() {
+        return grade;
+    }
 
-    public int getSeasonNumber() { return seasonNumber; }
+    public int getSeasonNumber() {
+        return seasonNumber;
+    }
 
-    public List<List<String>> getFilters() { return filters; }
-
+    public List<List<String>> getFilters() {
+        return filters;
+    }
 }

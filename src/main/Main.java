@@ -1,8 +1,9 @@
 package main;
 
-import Entities.*;
-import Parser.Parser;
-import Solver.Solver;
+import entities.Database;
+import entities.User;
+import parser.Parser;
+import solver.Solver;
 import checker.Checker;
 import checker.Checkstyle;
 import common.Constants;
@@ -80,8 +81,8 @@ public final class Main {
         //TODO add here the entry point to your implementation
         Database database = new Database();
         Parser parser = new Parser();
-        parser.BuildDatabase(input, database);
-        parser.BuildTasks(input);
+        parser.buildDatabase(input, database);
+        parser.buildTasks(input);
 
         ArrayList<User> users = (ArrayList<User>) database.getUsers();
         Solver solver = new Solver(fileWriter, arrayResult);

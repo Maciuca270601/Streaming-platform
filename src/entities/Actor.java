@@ -1,45 +1,62 @@
-package Entities;
+package entities;
 
 import actor.ActorsAwards;
 import fileio.ActorInputData;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class Actor {
+public final class Actor {
     private String name;
-    private String carrerDescription;
+    private String careerDescription;
     private ArrayList<String> filmography;
     private Map<ActorsAwards, Integer> awards;
 
-    public Actor() {}
+    public Actor() {
 
-    public Actor(ActorInputData actorData) {
+    }
+
+    public Actor(final ActorInputData actorData) {
         this.name = actorData.getName();
-        this.carrerDescription = actorData.getCareerDescription();
+        this.careerDescription = actorData.getCareerDescription();
         this.filmography = actorData.getFilmography();
         this.awards = actorData.getAwards();
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-    public String getCarrerDescription() { return carrerDescription; }
+    public String getCareerDescription() {
+        return careerDescription;
+    }
 
-    public void setCarrerDescription(String carrerDescription) { this.carrerDescription = carrerDescription; }
+    public ArrayList<String> getFilmography() {
+        return filmography;
+    }
 
-    public ArrayList<String> getFilmography() { return filmography; }
+    public void setFilmography(final ArrayList<String> filmography) {
+        this.filmography = filmography;
+    }
 
-    public void setFilmography(ArrayList<String> filmography) { this.filmography = filmography; }
+    public Map<ActorsAwards, Integer> getAwards() {
+        return awards;
+    }
 
-    public Map<ActorsAwards, Integer> getAwards() { return awards; }
+    public void setAwards(final Map<ActorsAwards, Integer> awards) {
+        this.awards = awards;
+    }
 
-    public void setAwards(Map<ActorsAwards, Integer> awards) { this.awards = awards; }
-
-    public Double actorGrade(ArrayList<Movie> movies, ArrayList<Serial> serials) {
+    /**
+     * actorGrade
+     * -> designed to determine a sum of ratings for every video in which
+     * this actor has played. The sum follows the indications provided on OCW.
+     */
+    public Double actorGrade(final ArrayList<Movie> movies, final ArrayList<Serial> serials) {
         double sumGrade = 0d;
         int count = 0;
         for (Movie m: movies) {
@@ -77,7 +94,12 @@ public class Actor {
         return sumGrade / count;
     }
 
-    public Integer actorAwards(List<String> filters) {
+    /**
+     * actorAwards
+     * -> designed to determine how many awards this actor has won,
+     * iterating through its hashmap for awards.
+     */
+    public Integer actorAwards() {
         int counter = 0;
         for (Map.Entry<ActorsAwards, Integer> entry : this.getAwards().entrySet()) {
             counter = counter + entry.getValue();

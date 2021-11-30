@@ -1,7 +1,6 @@
-package Entities;
+package entities;
 
 import fileio.ShowInput;
-
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
@@ -12,24 +11,40 @@ public class Video {
     private ArrayList<String> cast;
     private ArrayList<String> genres;
 
-    public Video() {}
+    public Video() {
 
-    public Video(ShowInput show) {
+    }
+
+    public Video(final ShowInput show) {
         this.title = show.getTitle();
         this.year = show.getYear();
         this.cast = show.getCast();
         this.genres = show.getGenres();
     }
 
-    public String getTitle() { return title; }
+    public final String getTitle() {
+        return title;
+    }
 
-    public int getYear() { return year; }
+    public final int getYear() {
+        return year;
+    }
 
-    public ArrayList<String> getCast() { return cast; }
+    public final ArrayList<String> getCast() {
+        return cast;
+    }
 
-    public ArrayList<String> getGenres() { return genres; }
+    public  final ArrayList<String> getGenres() {
+        return genres;
+    }
 
-    public int findActor(String name) {
+    /**
+     * findActor
+     * -> designed to check if an actor has played in a certain video.
+     * -> 0 => has not played in that certain video.
+     * -> 1 => has played in that certain video.
+     */
+    public int findActor(final String name) {
         for (String s: cast) {
             if (Objects.equals(s, name)) {
                 return 1;
@@ -38,7 +53,11 @@ public class Video {
         return 0;
     }
 
-    public Integer favoriteVideo(ArrayList<User> users) {
+    /**
+     * favoriteVideo
+     * -> designed to return the number of favorite nominations that a certain video has.
+     */
+    public Integer favoriteVideo(final ArrayList<User> users) {
         int counter = 0;
         for (User u: users) {
             for (String favorite: u.getFavoriteMovies()) {
@@ -51,11 +70,18 @@ public class Video {
         return counter;
     }
 
+    /**
+     *  this does nothing because it will be overwritten.
+     */
     public Double ratingVideo() {
         return 0d;
     }
 
-    public Integer positionVideo(ArrayList<Video> videos) {
+    /**
+     * positionVideo
+     * -> designed to return the index of a video from the existing database.
+     */
+    public Integer positionVideo(final ArrayList<Video> videos) {
         for (int i = 0; i < videos.size(); i++) {
             if (Objects.equals(videos.get(i).getTitle(), this.title)) {
                 return i;
@@ -64,7 +90,11 @@ public class Video {
         return 0;
     }
 
-    public Integer viewsVideo(ArrayList<User> users) {
+    /**
+     * viewsVideo
+     * -> designed to return the total amount of views that a certain video has.
+     */
+    public Integer viewsVideo(final ArrayList<User> users) {
         int counter = 0;
         for (User u : users) {
             for (Map.Entry<String, Integer> entry : u.getHistory().entrySet()) {

@@ -1,18 +1,18 @@
-package Entities;
+package entities;
 
 import fileio.SerialInputData;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
 
-public class Serial extends Video{
+public final class Serial extends Video {
     private int numberOfSeasons;
-    private ArrayList<Season> seasons = new ArrayList<>();
+    private final ArrayList<Season> seasons = new ArrayList<>();
 
-    public Serial() {}
+    public Serial() {
 
-    public Serial(SerialInputData serialInput) {
+    }
+
+    public Serial(final SerialInputData serialInput) {
         super(serialInput);
         this.numberOfSeasons = serialInput.getNumberSeason();
         int currentSeason = 1;
@@ -23,10 +23,20 @@ public class Serial extends Video{
         }
     }
 
-    public int getNumberOfSeasons() { return numberOfSeasons; }
+    public int getNumberOfSeasons() {
+        return numberOfSeasons;
+    }
 
-    public ArrayList<Season> getSeasons() { return seasons; }
+    public ArrayList<Season> getSeasons() {
+        return seasons;
+    }
 
+    /**
+     * ratingVideo
+     * -> designed to return the overall rating of a serial.
+     * -> each season has its own average rating.
+     * -> the overall rating is an average of each season rating.
+     */
     public Double ratingVideo() {
         double seasonGrade;
         double serialGrade = 0d;
@@ -45,6 +55,12 @@ public class Serial extends Video{
         return serialGrade / numberOfSeasons;
     }
 
+    /**
+     * durationSerial
+     * -> designed to return the overall duration of a serial.
+     * -> each season has its own duration.
+     * -> the serial duration is the sum of each season duration.
+     */
     public Integer durationSerial() {
         int duration = 0;
         for (Season s: this.getSeasons()) {
@@ -52,5 +68,4 @@ public class Serial extends Video{
         }
         return duration;
     }
-
 }

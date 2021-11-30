@@ -1,4 +1,4 @@
-package Tasks;
+package tasks;
 
 
 import fileio.ActionInputData;
@@ -6,15 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Tasks {
+public final class Tasks {
     private ArrayList<ActionInputData> actions;
-    private ArrayList<Command> commands = new ArrayList<Command>();
-    private ArrayList<Query> queries = new ArrayList<Query>();
-    private ArrayList<Recommandation> recommandations = new ArrayList<Recommandation>();
+    private final ArrayList<Command> commands = new ArrayList<>();
+    private final ArrayList<Query> queries = new ArrayList<>();
+    private final ArrayList<Recommendation> recommendations = new ArrayList<>();
 
-    public Tasks() {}
+    public Tasks() {
 
-    public Tasks(List<ActionInputData> actions) {
+    }
+
+    public Tasks(final List<ActionInputData> actions) {
         for (ActionInputData actionInput: actions) {
             if (Objects.equals(actionInput.getActionType(), "command")) {
                 Command c = new Command(actionInput);
@@ -27,9 +29,9 @@ public class Tasks {
                 this.queries.add(q);
             }
             if (Objects.equals(actionInput.getActionType(), "recommendation")) {
-                Recommandation r = new Recommandation(actionInput);
+                Recommendation r = new Recommendation(actionInput);
                 assert false;
-                this.recommandations.add(r);
+                this.recommendations.add(r);
             }
         }
     }
@@ -42,7 +44,7 @@ public class Tasks {
         return queries;
     }
 
-    public ArrayList<Recommandation> getRecommandations() {
-        return recommandations;
+    public ArrayList<Recommendation> getRecommendations() {
+        return recommendations;
     }
 }
