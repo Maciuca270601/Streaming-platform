@@ -1,5 +1,7 @@
-Object Oriented Programming Course
-Homework - VideosDB
+Name: Maciuca Alexandru Petru
+Group: 324CA
+Course: Object Oriented Programming Course
+Title: Homework - VideosDB
 
 November 2021
 
@@ -7,32 +9,57 @@ November 2021
 https://ocw.cs.pub.ro/courses/poo-ca-cd/teme/tema
 
 # About the code
+    This is an idea of implementing a simple platform which provides information
+about movies and tv shows.
+    An important goal of the project was to give users personalized recommendations
+based on their preferences.
 
-We provide the input tests, the logic that parses them and the checker that runs them.
+## Structure
+    The homework is divided in several packages which contain classes that share
+the same utility. In order to solve the homework I have added the following:
 
-* test_db - contains the tests in JSON format
-* src
-   * checker - the checker's sources including the checkstyle necessary files, not to be modified
-   * fileio - classes for parsing the input files, not to be modified
-   * common, utils
-        * contain utility classes with constants and static methods
-        * you can add your own functionality in the existing classes or add new classes as well
-   * actor
-        * contains an enum for the types of awards an actor can have - do not modify it
-        * you can add here your actor related classes
-   * entertainment
-        * contains an enum for the supported video genres - do not modify it
-        * class for representing a Season of a tv show - do not modify it
-        * you can add here your entertainment related classes
+* package entities: -> Actor
+                    -> Database
+                    -> Movie
+                    -> Season
+                    -> Serial
+                    -> User
+                    -> Video
+Description: Since my platform is working with users, movies, tv shows and more, I needed
+to create my own objects which then I have stored in specific arrays which could be found
+in Database. The later also contains important functions that help me filter some of these
+arrays or sort them based on some filters or different criteria.
 
-We encourage you to organize your implementation in packages based on the functionality their classes offer. Try to keep
-your code modular, readable and documented.
+* package parser: -> Parser
+Description: This class has two main functions that help me build the Database in which I have
+stored all of my objects and also build the Tasks where I have stored all of my commands, queries
+and recommendations respectively.
 
-# Testing
+* package solver: -> CommandSolver
+                  -> QuerySolver
+                  -> RecommendationSolver
+                  -> Solver
+Description: As the title says all of these classes solve specific tasks.
+CommandSolver is being used in order to solve all the commands I have received from input,
+and same goes for QuerySolver and RecommendationSolver. The Solver class iterates through
+all of my tasks and decides the type of action in order to solve it with the specific class.
 
-The Main class runs the checker on your implementation. Add the entry point to your implementation in it.
+* package tasks: -> Command
+                 -> Query
+                 -> Recommendation
+                 -> Tasks
+Description: The principle here is similar to Database which stores all of my objects.
+In this case the database is called Tasks and its objects are commands, queries and or
+recommendations.
 
-Run Main to test your implementation from the IDE or from command line.
+### Difficulties
+    I had a lot of trouble deciding how I want to implement my homework, how should I divide
+my code into classes and packages but after making an overall idea of how should I approach it,
+it all went smooth and I have managed to pass all the tests.
 
-Run the main method from Test class with the name of the input file from the command line and the result will be written
-to the out.txt file. Thus, you can compare this result with ref.
+#### Bibliography
+Lab4: https://ocw.cs.pub.ro/courses/poo-ca-cd/laboratoare/static-final
+How to sort a hashmap in Java: https://www.geeksforgeeks.org/sorting-hashmap-according-key-value-java/
+
+##### GitHub
+https://github.com/Maciuca270601/Homework (private)
